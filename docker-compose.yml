@@ -1,0 +1,16 @@
+services:
+  fetch_podcast:
+    build: .
+    restart: "no"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      STAYUP_API_URL: ${STAYUP_API_URL:-http://localhost:3000}
+      STAYUP_API_KEY: ${STAYUP_API_KEY}
+
+  test:
+    build: .
+    image: stayup-test
+    entrypoint: ["python", "-m", "pytest", "tests/", "-v"]
+    restart: "no"
